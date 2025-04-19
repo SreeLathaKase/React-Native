@@ -31,6 +31,18 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name='explore' options={{title:'Contact Us'}}/>
+        <Stack.Screen name='index' options={{headerShown:false,title:'Home'}}/>
+        <Stack.Screen name="coffee/[id]" options={({ route }) => {
+          const { id } = route.params ?? {};
+          const { coffeeMenu } = require('@/constants/coffeeMenu');
+          const coffee = coffeeMenu.find((item) => item.id === id);
+          return {
+            headerShown: true,
+            title: coffee?.name ?? 'Coffee Details',
+          };
+        }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
